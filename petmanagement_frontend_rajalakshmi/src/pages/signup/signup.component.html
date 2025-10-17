@@ -1,0 +1,66 @@
+<div class="signup-container">
+  <div class="signup-form">
+    <form #signupForm="ngForm" (ngSubmit)="onSubmit(signupForm)">
+      <h2>Join Our Network</h2>
+      <div class="form-group">
+
+        <label for="name">Name</label>
+        <input id="name" type="text"  placeholder="Enter your name" name="name" [(ngModel)]="user.name" required minlength="3" #name="ngModel">
+        <div class="text-danger" *ngIf="name.invalid && name.touched">Name must be at least 3 characters</div>
+      </div>
+      <div class="form-group">
+
+        <label for="email">Email Address</label>
+        <input id="email" type="email" name="email"  placeholder="Enter email id" [(ngModel)]="user.email" required email #email="ngModel">
+        <div class="text-danger" *ngIf="email.invalid && email.touched">Enter a valid email</div>
+      </div>
+      <div class="form-group">
+
+        <label for="password">Password</label>
+        <input id="password" type="password"  placeholder="Enter a password" name="password" [(ngModel)]="user.password" required #password="ngModel"
+          pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).{8,}$" required>
+
+        <div class="text-danger" *ngIf="password.invalid && password.touched">
+
+          <p *ngIf="password.errors?.['required']">Password is required.</p>
+          <p *ngIf="password.errors?.['pattern']">Password must be at least 8 characters long and include uppercase,
+            lowercase, a number, and a special character.</p>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="confirmPassword">Confirm Password</label>
+        <input id="confirmPassword"  placeholder="Enter a confirm password" name="confirmPassword" type="password" [(ngModel)]="user.confirmPassword" required
+          minlength="6" class="form-control">
+        <div class="text-danger" *ngIf="user.confirmPassword && user.password !== user.confirmPassword">
+          Passwords do not match.
+        </div>
+      </div>
+      <div>
+        <div class="row">
+          <div class="col-2">
+            <input id="terms" type="checkbox" name="terms" [(ngModel)]="user.terms" required #terms="ngModel">
+          </div>
+          <div class="col-10" >
+            <label for="terms">I agree to the <a href="#" >Terms & Conditions</a></label>
+          </div>
+        </div>
+      </div>
+
+      <div *ngIf="terms.invalid && terms.touched">You must accept the terms & conditions</div>
+
+      <button type="submit" [disabled]="signupForm.invalid">Sign Up </button>
+
+      <p class="alink">
+        Do you have an account? <a  (click)="commonService.redirectTo('/signin')">Sign In</a>
+      </p>
+    </form>
+  </div>
+  <div class="signup-image">
+    <img src="assets/images/signupdogimage.jpg" alt="Welcome">
+    <p class="text-justify"><b>Welcome to our community </b><br> Welcome to Petsave's community of pet lovers! Our
+      platform is here to help you find your lost furry friend quickly and easily. By reporting your lost or found pet,
+      you can instantly send a free alert to our network of local members who are actively looking out for your pet's
+      safe return. Join us today and let's bring your pet home together!</p>
+  </div>
+</div>
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>

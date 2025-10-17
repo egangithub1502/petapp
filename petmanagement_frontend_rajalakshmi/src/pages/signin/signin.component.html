@@ -1,0 +1,44 @@
+<div class="signup-container">
+    <div class="signup-form">
+        <form #signinForm="ngForm" (ngSubmit)="onSubmit(signinForm)">
+            <h2>Login To Your Account</h2>
+
+            <div class="form-group">
+
+                <label for="email">Email Address</label>
+                <input id="email"  placeholder="Enter email id" type="email" name="email" [(ngModel)]="user.email" required email #email="ngModel">
+                <div class="text-danger" *ngIf="email.invalid && email.touched">Enter a valid email</div>
+            </div>
+            <div class="form-group">
+
+                <label for="password">Password</label>
+                <input id="password"  placeholder="Enter password" type="password" name="password" [(ngModel)]="user.password" required
+                    #password="ngModel" pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@#$%^&+=!]).{8,}$">
+
+                <div class="text-danger" *ngIf="password.invalid && password.touched">
+
+                    <p *ngIf="password.errors?.['required']">Password is required.</p>
+                    <p *ngIf="password.errors?.['pattern']">Password must be at least 8 characters long and include
+                        uppercase,
+                        lowercase, a number, and a special character.</p>
+                </div>
+            </div>
+            <button type="submit" [disabled]="signinForm.invalid">Sign In</button>
+            <p class="alink">
+                <a (click)="commonService.redirectTo('/forgot-password')">Forgot Password?</a>
+            </p>
+            <p class="alink">
+                Don't have an account? <a (click)="commonService.redirectTo('/signup')">Sign up</a>
+            </p>
+        </form>
+    </div>
+    <div class="signup-image">
+        <img src="assets/images/signupdogimage.jpg" alt="Welcome">
+        <p class="text-justify"><b>Welcome to our community! </b><br> Petsave is actively helping to search for your
+            lost
+            pets in your
+            local area. Report your lost/found pets here. Join us today and let's bring your pet home together!</p>
+    </div>
+</div>
+
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>

@@ -1,0 +1,35 @@
+<nav class="navbar">
+  <div class="logo">
+    <a routerLink="/">
+      <img src="assets/images/petlogo.jpg" alt="App Logo"> <span class="site-name">Petsave</span>
+    </a>
+  </div>
+  <ul class="nav-links">
+    <li *ngIf="!loginstatus"><button class="btn" (click)="commonService.redirectTo('/signin')">SignIn</button></li>
+    <li *ngIf="loginstatus">
+      <a routerLink="/profile">
+        <img src="assets/images/userprofile.jpg" alt="User Profile" class="profile-img">
+      </a>
+    </li>
+    <li *ngIf="loginstatus"><button class="logoutbutton btn btn-primary" (click)="logoutmodal.show()">Logout</button></li>
+  </ul>
+</nav>
+
+<div class="modal fade" bsModal #logoutmodal="bs-modal" [config]="{ backdrop: 'static' }" tabindex="-1"
+  role="dialog" aria-labelledby="logoutmodal" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirm Logout</h5>
+        <button type="button" class="btn-close" (click)="logoutmodal.hide()"></button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to logout?</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="logoutmodal.hide()">Cancel</button>
+        <button class="btn btn-danger" (click)="logoutconfirm(logoutmodal)">Logout</button>
+      </div>
+    </div>
+  </div>
+</div>

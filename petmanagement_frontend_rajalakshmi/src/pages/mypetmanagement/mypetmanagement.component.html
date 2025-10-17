@@ -1,0 +1,218 @@
+<!-- Search Bar -->
+
+<div class="d-flex justify-content-end pb-2">
+    <input type="text" class="form-control w-25" placeholder="Search...">
+    <button class="btn btn-primary ms-2" (click)="missingPetModal.show()">Report missing pet</button>
+</div>
+<!-- Table -->
+<!-- <div class="table-container">
+            <table class="table table-borderless">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Name</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <ng-container *ngIf="my_pet_details.length == 0">
+                        <tr>
+                            <td colspan="3" class="text-center">No records found</td>
+                        </tr>
+                    </ng-container>
+                    <ng-container *ngIf="my_pet_details.length > 0">
+                        <tr
+                            *ngFor="let mypet of my_pet_details| paginate: { itemsPerPage: itemperpage, currentPage: mypetpage, totalItems: mypettotal }">
+                            <td>{{ mypet.petname }}</td>
+                            <td>{{ mypet.name }}</td>
+                            <td>{{ mypet.status }}</td>
+                        </tr>
+                    </ng-container>
+
+                </tbody>
+            </table>
+            <div class="pagination-container" *ngIf="my_pet_details.length > itemperpage">
+                <pagination-controls (pageChange)="mypetpageChangeEvent($event)"></pagination-controls>
+            </div>
+        </div> -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-3"
+            *ngFor="let item of my_pet_details| paginate: { itemsPerPage: itemperpage, currentPage: mypetpage, totalItems: mypettotal }">
+
+            <div class="card position-relative">
+                <span *ngIf="item.reportstatus=='Active'"
+                    class="badge rounded-pill bg-success position-absolute top-0 end-0 m-2">{{item.reportstatus}}</span>
+                <span *ngIf="item.reportstatus!='Active'"
+                    class="badge rounded-pill bg-danger position-absolute top-0 end-0 m-2">{{item.reportstatus}}</span>
+                <img [src]="item.petimage" class="card-img-top" alt="Card Image">
+                <div class="card-body">
+                    <h5 class="card-title">{{ item.petname }}</h5>
+
+                    <button class="badge rounded-pill bg-primary w-100 mb-2"
+                        (click)="helppet_data=item.contactinfo;helpfindPetModal.show()">Find Help Messages</button>
+                    <button class="badge rounded-pill bg-secondary w-100"
+                        (click)="selectedpetdata=item;updatestatusmodal.show()">Update Status</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <pagination-controls (pageChange)="mypetpageChangeEvent($event)"></pagination-controls>
+</div>
+
+<ng-container *ngIf="my_pet_details.length == 0">
+    <tr>
+        <td colspan="3" class="text-center">No records found</td>
+    </tr>
+</ng-container>
+<div class="modal fade" bsModal #missingPetModal="bs-modal" [config]="{ backdrop: 'static' }" tabindex="-1"
+    role="dialog" aria-labelledby="missingPetModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="missingPetModalLabel">Report Missing Pet</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="missingPetModal.hide()"></button>
+            </div>
+            <div class="modal-body">
+                <form #missingPetForm="ngForm" (ngSubmit)="submitReport(missingPetForm,missingPetModal)">
+                    <!-- Pet Name -->
+                    <div class="mb-3">
+                        <label for="petName" class="form-label">Pet Name</label>
+                        <input type="text" class="form-control" [(ngModel)]="petreportdetails.petname" name="petName"
+                            required #petName="ngModel">
+                        <div *ngIf="petName.invalid && petName.touched" class="text-danger">Pet name is required.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="petdescription" class="form-label">Description:</label>
+                        <textarea class="form-control" [(ngModel)]="petreportdetails.petdescription"
+                            name="petdescription" required #petdescription="ngModel"></textarea>
+                        <div *ngIf="petdescription.invalid && petdescription.touched" class="text-danger">Description is
+                            required.</div>
+
+                    </div>
+
+                    <!-- Breed -->
+                    <div class="mb-3">
+                        <label for="petbreed" class="form-label">Breed</label>
+                        <input type="text" class="form-control" id="petbreed" name="petbreed"
+                            [(ngModel)]="petreportdetails.petbreed" #petbreed="ngModel" required>
+                        <div *ngIf="petbreed.invalid && petbreed.touched" class="text-danger">Pet breed is required.
+                        </div>
+                    </div>
+
+                    <!-- Age -->
+                    <div class="mb-3">
+                        <label for="petage" class="form-label">Age</label>
+                        <input type="number" class="form-control" id="petage" name="petage"
+                            [(ngModel)]="petreportdetails.petage" #petage="ngModel" required>
+                        <div *ngIf="petage.invalid && petage.touched" class="text-danger">Pet age is required.</div>
+                    </div>
+
+                    <!-- Last Seen Location (Leaflet) -->
+                    <div class="mb-3">
+                        <label for="map" class="form-label">Last Seen Location</label>
+                        <div id="map"></div>
+                    </div>
+
+                    <!-- Image Upload -->
+                    <div class="mb-3">
+                        <label for="petImage" class="form-label">Upload Pet Image</label>
+                        <input type="file" class="form-control" (change)="onFileSelected($event)" single
+                            accept=".png,.jpg,.gif,.jpeg">
+                        <img *ngIf="petreportdetails.imagePreview" [src]="petreportdetails.imagePreview" class="mt-2"
+                            style="max-width: 100%;">
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-success">Submit Report</button>
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" bsModal #helpfindPetModal="bs-modal" [config]="{ backdrop: 'static' }" tabindex="-1"
+    role="dialog" aria-labelledby="helpfindPetModal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="helpfindPetModal">Messages about missing pet!</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="helpfindPetModal.hide()"></button>
+            </div>
+            <div class="modal-body">
+                <div class="table-container">
+                    <table class="table table-borderless">
+                        <thead>
+                            <tr>
+                                <th>Message</th>
+                                <th>Date & Time</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <ng-container *ngIf="helppet_data.length == 0">
+                                <tr>
+                                    <td colspan="3" class="text-center">No records found</td>
+                                </tr>
+                            </ng-container>
+                            <ng-container *ngIf="helppet_data.length > 0">
+                                <tr
+                                    *ngFor="let helppet of helppet_data| paginate: { itemsPerPage: 5, currentPage: helppetcurrentpage, totalItems: helppet_data.length }">
+                                    <td>{{ helppet.description }}</td>
+                                    <td>{{ helppet.postedtime|date:'DD-MM-YYYY HH:MM:SS' }}</td>
+                                </tr>
+                            </ng-container>
+                        </tbody>
+                    </table>
+                    <div class="pagination-container" *ngIf="helppet_data.length > 5">
+                        <pagination-controls (pageChange)="helppetcurrentpage=$event"></pagination-controls>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" bsModal #updatestatusmodal="bs-modal" [config]="{ backdrop: 'static' }" tabindex="-1"
+    role="dialog" aria-labelledby="updatestatusmodal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="updatestatusmodal">Update your pet status</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="selectedpetdata={};updatestatusmodal.hide();"></button>
+            </div>
+            <div class="modal-body">
+                <form #updatestatusform="ngForm">
+                    <div class="mb-3">
+                       
+                        <label for="statuspet" class="form-label">Select Status:</label>
+                        <select class="form-control" [(ngModel)]="selectedpetdata.reportupdatestatus"
+                            name="reportupdatestatus" required #reportupdatestatus="ngModel">
+                            <option value="Active">Active</option>
+                            <option value="Closed">Closed</option>
+
+                        </select>
+                        <div *ngIf="reportupdatestatus.invalid && reportupdatestatus.touched" class="text-danger">
+                            Status is
+                            required.</div>
+
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-success" [disabled]="!selectedpetdata.reportstatus"
+                        (click)="updateStatus(updatestatusmodal,updatestatusform);">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>

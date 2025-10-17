@@ -1,0 +1,43 @@
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #343a40;
+  padding: 10px;
+}
+
+.logo img {
+  height: 40px;
+}
+
+.nav-links {
+  display: flex;
+  list-style: none;
+}
+
+.nav-links li {
+  margin: 0 15px;
+}
+
+.nav-links a, .nav-links button {
+  color: white;
+  text-decoration: none;
+  font-size: 16px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.profile-img {
+  height: 30px;
+  border-radius: 50%;
+}
+.site-name {
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: 10px;
+}
+.logoutbutton{
+  cursor: pointer;
+}

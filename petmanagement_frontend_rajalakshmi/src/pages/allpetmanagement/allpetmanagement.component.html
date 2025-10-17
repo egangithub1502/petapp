@@ -1,0 +1,122 @@
+<!-- Search Bar -->
+<div class="d-flex justify-content-end pb-2">
+    <input type="text" class="form-control w-25" placeholder="Search...">
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3 col-md-4 col-sm-6 mb-3"
+            *ngFor="let allpet of all_pet_details| paginate: { itemsPerPage: itemperpage, currentPage: allpetpage, totalItems: allpettotal };let i=index">
+
+            <div class="card position-relative">
+
+                <span *ngIf="allpet.reportstatus=='Active'"
+                    class="badge rounded-pill bg-success position-absolute top-0 end-0 m-2">{{allpet.reportstatus}}</span>
+                <span *ngIf="allpet.reportstatus!='Active'"
+                    class="badge rounded-pill bg-danger position-absolute top-0 end-0 m-2">{{allpet.reportstatus}}</span>
+                <img [src]="allpet.petimage" class="card-img-top" alt="Card Image">
+                <div class="card-body">
+                    <h5 class="card-title">
+                        {{ allpet.petname }}
+
+                    </h5>
+                    <button class="badge rounded-pill bg-primary w-100 mb-2"
+                        (click)="selected_allpetdetails=allpet;getdata(selected_allpetdetails);helpfindingpetmodal.show()">Get
+                        Pet Details!!</button>
+                    <button class="badge rounded-pill bg-secondary w-100" [disabled]="allpet.reportstatus!='Active'"
+                        (click)="selected_allpetdetails=allpet;contact_pet_details.contactdescription='';contactpetownermodal.show()">
+                        Contact Pet Owner</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <pagination-controls (pageChange)="allpetpageChangeEvent($event)"></pagination-controls>
+</div>
+
+<div class="modal fade" bsModal #helpfindingpetmodal="bs-modal" [config]="{ backdrop: 'static' }" tabindex="-1"
+    role="dialog" aria-labelledby="helpfindingpetmodal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="helpfindingpetmodal">Get Missing Pet Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="helpfindingpetmodal.hide();"></button>
+            </div>
+            <div class="modal-body">
+                <!-- Pet Name -->
+                <div class="mb-3">
+                    <label for="petName" class="form-label">Pet Name</label>
+                    <input type="text" class="form-control" [(ngModel)]="selected_allpetdetails.petname" name="petName"
+                        required #petName="ngModel" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="petdescription" class="form-label">Description:</label>
+                    <textarea class="form-control" [(ngModel)]="selected_allpetdetails.petdescription"
+                        name="petdescription" #petdescription="ngModel" disabled></textarea>
+                </div>
+                <!-- Breed -->
+                <div class="mb-3">
+                    <label for="petbreed" class="form-label">Breed</label>
+                    <input type="text" class="form-control" id="petbreed" name="petbreed"
+                        [(ngModel)]="selected_allpetdetails.petbreed" #petbreed="ngModel" disabled>
+                </div>
+                <!-- Age -->
+                <div class="mb-3">
+                    <label for="petage" class="form-label">Age</label>
+                    <input type="number" class="form-control" id="petage" name="petage"
+                        [(ngModel)]="selected_allpetdetails.petage" #petage="ngModel" disabled>
+                </div>
+                <div class="mb-3">
+                    <label for="map" class="form-label">Last Seen Location</label>
+                    <!-- <div id="map"></div> -->
+                    <app-viewmap [latitude]="selected_allpetdetails?.lastsightlocation.lat"
+                        [longitude]="selected_allpetdetails?.lastsightlocation.lng"></app-viewmap>
+
+                </div>
+                <!-- Image Upload -->
+                <div class="mb-3">
+                    <label for="petImage" class="form-label">Pet Image</label>
+                    <!-- <img *ngIf="selected_allpetdetails.petimage" [src]="selected_allpetdetails.petimage"
+                        class="mt-2" style="max-width: 100%;"> -->
+                    <p-image class="mt-2" *ngIf="selected_allpetdetails.petimage"
+                        [src]="selected_allpetdetails.petimage" alt="Preview Image" width="150" height="150"
+                        [preview]="true"></p-image>
+                </div>
+                <!-- Submit Button -->
+                <button type="submit" class="btn btn-success" (click)="helpfindingpetmodal.hide();">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" bsModal #contactpetownermodal="bs-modal" [config]="{ backdrop: 'static' }" tabindex="-1"
+    role="dialog" aria-labelledby="contactpetownermodal" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="contactpetownermodal">Help pet to find</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="contactpetownermodal.hide();"></button>
+            </div>
+            <div class="modal-body">
+                <form #helppetform="ngForm">
+                    <div class="mb-3">
+                        <label for="contactdescription" class="form-label">Description:</label>
+                        <textarea class="form-control" [(ngModel)]="contact_pet_details.contactdescription"
+                            name="contactdescription" required #contactdescription="ngModel"></textarea>
+                        <div *ngIf="contactdescription.invalid && contactdescription.touched" class="text-danger">
+                            Description is
+                            required.</div>
+
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="btn btn-success" [disabled]="!contact_pet_details.contactdescription"
+                        (click)="submitcontactpet(contactpetownermodal,helppetform);">Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>

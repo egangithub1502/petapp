@@ -1,0 +1,196 @@
+.my-container{
+  display:flex;
+  flex-direction: column;
+  align-items: center;
+  width:100%;
+  margin: 0; /* Ensure no extra margin around the container */
+  padding: 0;
+}
+.carousel-inner img {
+height: 400px;
+overflow: hidden;
+object-fit:cover;
+}
+.carousel-inner {
+position: relative;
+width: 100%;
+overflow: hidden; /* Ensure no overflow */
+}
+ 
+.carousel-item {
+width: 100%;
+height: 100%;
+/* transition: transform 0ms ease, opacity 0s ease; */
+transition: transform 1s ease-in, opacity 0.5s ease-in-out;
+transform: scale(1) rotate(0deg);
+/* opacity: 0.8; */
+ 
+}
+ 
+.carousel-item img {
+width: 100%;
+height: 400px; /* Maintain aspect ratio */
+object-fit: cover; /* Ensure images cover the container */
+}
+.my-container-cards{
+  display:flex;
+  justify-content: center;
+  margin-top:20px;
+  width:100%;
+  padding-left:40px;
+  padding-right:40px;
+}
+.cards{
+  position:relative;
+  display: flex;
+  justify-content:center;
+  align-items: center;
+  width:20%;
+  margin:10px;
+}
+.cards h3{
+  position:absolute;
+  color:rgb(46, 42, 42);
+}
+.cards img{
+height:350px;
+width:100%;
+object-fit: fill;
+}
+.my-container-header{
+font-style: italic;
+font-family: cursive;
+font-size: 30px;
+}
+ 
+.icon-size{
+  font-size: 30px;
+  color:rgb(61, 58, 58);
+}
+.cat_video,.dog_video{
+  width:100%;
+  height:auto;
+}
+.card-container{
+width:100%;
+margin-top:50px;
+}
+.cat-card{
+margin:10px;
+}
+ 
+.my-btn{
+  border:none;
+  padding:5px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius:5px;
+}
+ 
+@keyframes appear {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+.appearance {
+  animation: appear 3s linear;
+}
+ 
+.card-heading{
+  text-align: center;
+  margin: 20px 0;
+}
+ 
+/* My CSS */
+ 
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 cards per row */
+  gap: 10px; /* Space between cards */
+}
+ 
+.cat-card {
+  box-shadow: -1px -9px 77px -36px rgba(0,0,0,0.75);
+  -webkit-box-shadow: -1px -9px 77px -36px rgba(0,0,0,0.75);
+  -moz-box-shadow: -1px -9px 77px -36px rgba(0,0,0,0.75);
+  padding: 10px; /* Add padding for spacing inside card */
+  flex-direction: column;
+  align-items: center;
+  background: white; /* Optional: Add background color to card */
+}
+ 
+.breed{
+  font-weight: 500;
+}
+ 
+.cat-card img {
+  width: 100%;
+  height: 20rem; /* Maintain aspect ratio */
+  object-fit: cover; /* Ensure image covers the container */
+}
+ 
+.my-container-header {
+  font-style: italic;
+  font-family: cursive;
+  font-size: 30px;
+  text-align: center; /* Center the header text */
+}
+ 
+.my-container-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 cards per row */
+  gap: 20px; /* Space between cards */
+  padding: 0 20px; /* Optional: Add padding for better alignment */
+}
+ 
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #ddd; /* Border around the card */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for effect */
+  overflow: hidden;
+  background: white;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+ 
+.card:hover {
+  transform: scale(1.05); /* Slightly enlarge on hover */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); /* Increase shadow on hover */
+}
+ 
+.card-title {
+  font-size: 35px;
+  font-weight: bold;
+  text-align: center;
+  /* padding-top: 10px; */
+  margin-bottom: -10px;
+  background-color: #f8f8f8; /* Light background for title */
+  width: 100%;
+  /* box-sizing: border-box;  */
+  /* Include padding in the width */
+}
+ 
+.card img {
+  width: 100%;
+  height: 100%; /* Maintain aspect ratio */
+  object-fit: cover; /* Ensure image covers the container */
+  /* transform: translateY(17px); */
+  /* opacity: 75%; */
+  /* transform: translateX(0px); */
+}
+ 
+.card-title{
+  background: none;
+  padding-top: 10rem;
+  color: wheat;
+}
+ 
+.gradient-overlay {
+  background: radial-gradient(circle, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
+}
+

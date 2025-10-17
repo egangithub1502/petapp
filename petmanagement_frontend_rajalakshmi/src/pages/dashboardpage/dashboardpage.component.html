@@ -1,0 +1,17 @@
+<div class="dashboard-container">
+    <!-- Sidebar -->
+    <nav class="sidebar">
+        <ul>
+            <li><a (click)="all_pet_status=true;my_pet_status=false;getallpetdata()">All Pets Missing Reports</a></li>
+            <li><a (click)="all_pet_status=false;my_pet_status=true;getmypetdata()">My Pets Missing Reports</a></li>
+        </ul>
+    </nav>
+    <div class="main-content" *ngIf="all_pet_status">
+        <app-allpetmanagement></app-allpetmanagement>
+    </div>
+    <div class="main-content" *ngIf="my_pet_status">
+        <app-mypetmanagement></app-mypetmanagement>
+    </div>
+</div>
+
+<ngx-spinner type="ball-scale-multiple"></ngx-spinner>

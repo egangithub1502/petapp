@@ -1,0 +1,113 @@
+/* You can add global styles to this file, and also import other style files */
+.container {
+    overflow-x: hidden;
+}
+.btn{
+    background-color: #8d8d8d !important;
+}
+
+// *************footer*******************
+.frtcnd {
+    p {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.600000023841858;
+        color: #cfcfcf;
+    }
+}
+
+.indfooter {
+    background-color: #343a40;
+    padding: 60px 0px 10px 0px;
+}
+
+.ftmenulist {
+    h5 {
+        color: #ffffff;
+        font-size: 15px;
+        font-weight: 500;
+        line-height: 1.5;
+        margin-bottom: 25px;
+    }
+
+    ul {
+        list-style: none;
+        padding-inline-start: 0px;
+
+        li {
+            padding-bottom: 25px;
+
+            a {
+                color: rgba(255, 255, 255, 0.800000011920929);
+                font-size: 14px;
+                font-weight: 400;
+                line-height: 1.5;
+
+                &:hover {
+                    color: #ffffff;
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+}
+
+.frticnmenu {
+    a {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background-color: transparent;
+        border-radius: 50%;
+
+        &:hover {
+            background-color: #ffffff;
+        }
+    }
+}
+
+.endtextoff {
+    h2 {
+        color: rgba(255, 255, 255, 0.800000011920929);
+        font-size: 14px;
+        font-weight: 500;
+        line-height: 1.5;
+        margin-bottom: 0px;
+        padding: 20px 0px;
+    }
+}
+.alink {
+  margin-top: 10px;
+}
+
+.alink a {
+  color: #007bff !important;
+  text-decoration: none !important;
+}
+
+button:disabled {
+  background-color: #e0e0e0;
+  color: #888;
+  border: 1px solid #aaa;
+  cursor: not-allowed;
+  opacity: 0.5;
+  box-shadow: none;
+}
+  .card {
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+      background: white;
+      text-align: center;
+    }
+    .card-img-top {
+      height: 200px;
+      object-fit: cover;
+    }
+     .badge {
+      font-size: 0.9rem;
+      padding: 5px 10px;
+      border-radius: 5px;
+    }

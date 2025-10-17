@@ -1,0 +1,65 @@
+
+   <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+    <ol class="carousel-indicators">
+      <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"></li>
+      <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></li>
+      <li data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+      <div *ngFor="let image of carouselImages; let i = index" class="carousel-item" [class.active]="i === 0">
+        <img [src]="image" class="d-block w-100" alt="Slide {{ i + 1 }}">
+          <!-- <div class="slide" style="background-image: url(image);">
+    <h2>Slide 1 Text</h2> -->
+  <!-- </div> -->
+      </div>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </a>
+  </div>
+  <!-- <div class="carousel">
+  <div class="slide" style="background-image: url('assets/images/petquotes.jpg');">
+    <h2>Slide 1 Text</h2>
+  </div>
+  <div class="slide" style="background-image: url('assets/images/petquotesthree.jpg');">
+    <h2>Slide 2 Text</h2>
+  </div>
+  <div class="slide" style="background-image: url('assets/images/petquotestwo.jpg');">
+    <h2>Slide 3 Text</h2>
+  </div>
+</div> -->
+
+
+   <div class="my-container mt-2 appearance">
+     <h2 class="my-container-header mt-3">Every lost pet deserves a second chance to be found</h2>
+     <div class="my-container-cards px-2">
+       <div class="card bg-dark" >
+         <img src="assets/images/rectangle-1-22.png" class="card-img" alt="Pet Food" >
+         <div class="card-img-overlay gradient-overlay">
+           <h5 class="card-title">Lost but never forgotten. Every pawprint tells a story</h5>
+         </div>
+       </div>
+       <div class="card bg-dark" >
+         <img src="assets/images/rectangle-3-57.png" class="card-img" alt="Pet Services" >
+         <div class="card-img-overlay gradient-overlay">
+           <h5 class="card-title">They may be lost, but love always finds a way</h5>
+         </div>
+       </div>
+       <div class="card bg-dark" >
+         <img src="assets/images/rectangle-3-63.png" class="card-img" alt="Pet Categories" >
+         <div class="card-img-overlay gradient-overlay">
+           <h5 class="card-title">A missing pet is a missing piece of the heart. Help bring them home</h5>  
+         </div>
+       </div>
+     </div>
+   </div>
+   
+ 
+
+
+    
