@@ -5,10 +5,12 @@ on:
     branches: [ main, master ]
     paths:
       - 'petmanagement_backend_rajalakshmi/**'
+      - '!petmanagement_backend_rajalakshmi/.github/**'
   pull_request:
     branches: [ main, master ]
     paths:
       - 'petmanagement_backend_rajalakshmi/**'
+      - '!petmanagement_backend_rajalakshmi/.github/**'
 
 env:
   REGISTRY: ghcr.io
@@ -32,7 +34,7 @@ jobs:
         node-version: '18'
 
     - name: Install dependencies
-      run: npm ci
+      run: npm install
 
     - name: Run tests
       run: npm test || echo "No tests defined"

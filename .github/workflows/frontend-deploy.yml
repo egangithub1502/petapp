@@ -5,10 +5,12 @@ on:
     branches: [ main, master ]
     paths:
       - 'petmanagement_frontend_rajalakshmi/**'
+      - '!petmanagement_frontend_rajalakshmi/.github/**'
   pull_request:
     branches: [ main, master ]
     paths:
       - 'petmanagement_frontend_rajalakshmi/**'
+      - '!petmanagement_frontend_rajalakshmi/.github/**'
 
 env:
   REGISTRY: ghcr.io
@@ -32,7 +34,7 @@ jobs:
         node-version: '18'
 
     - name: Install dependencies
-      run: npm ci
+      run: npm install
 
     - name: Run tests
       run: npm test -- --watch=false --browsers=ChromeHeadless || echo "No tests defined"
@@ -155,3 +157,4 @@ jobs:
         text: "Pet Management Frontend deployment failed"
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
