@@ -1,5 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl: 'https://api.petmanagement.com'  // replace with your real production API URL
+  apiUrl: 'http://localhost:8000/v1/'
 };
-

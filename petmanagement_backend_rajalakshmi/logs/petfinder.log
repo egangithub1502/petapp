@@ -1,2 +1,0 @@
-[2025-10-17 20:02:31.242] INFO: Logger initialized {"logFile":"/home/jegan/newn/petmanagement_backend_rajalakshmi/logs/petfinder.log","logDir":"/home/jegan/newn/petmanagement_backend_rajalakshmi/logs","maxLogSize":10485760,"maxLogFiles":5,"logLevel":"INFO"}
-[2025-10-17 20:02:31.247] INFO: Test log entry

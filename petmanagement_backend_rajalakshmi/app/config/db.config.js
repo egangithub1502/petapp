@@ -1,3 +1,3 @@
 module.exports = {
-  url: "mongodb://localhost:27017/petmanagement"
+  url: "mongodb://172.17.0.3:27017/petmanagement"
 };

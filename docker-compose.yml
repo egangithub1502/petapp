@@ -1,10 +1,10 @@
 version: '3.8'
 
 services:
-  # MongoDB Database for Backend
+  # MongoDB Database
   mongodb:
     image: mongo:7-jammy
-    container_name: petmanagement-backend-mongodb
+    container_name: petmanagement-mongodb
     restart: unless-stopped
     ports:
       - "27017:27017"
@@ -14,12 +14,12 @@ services:
       - mongodb_data:/data/db
       - mongodb_config:/data/configdb
     networks:
-      - backend-network
+      - petmanagement-network
 
   # Backend API Service
   backend:
     build:
-      context: .
+      context: ./petmanagement_backend_rajalakshmi
       dockerfile: Dockerfile
     container_name: petmanagement-backend
     restart: unless-stopped
@@ -28,19 +28,35 @@ services:
     environment:
       - NODE_ENV=production
     env_file:
-      - .env
+      - ./petmanagement_backend_rajalakshmi/.env
     depends_on:
       - mongodb
     networks:
-      - backend-network
+      - petmanagement-network
     volumes:
-      - .:/app
+      - ./petmanagement_backend_rajalakshmi:/app
       - /app/node_modules
+
+  # Frontend Application
+  frontend:
+    build:
+      context: ./petmanagement_frontend_rajalakshmi
+      dockerfile: Dockerfile
+    container_name: petmanagement-frontend
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      - NODE_ENV=production
+    depends_on:
+      - backend
+    networks:
+      - petmanagement-network
 
 volumes:
   mongodb_data:
   mongodb_config:
 
 networks:
-  backend-network:
+  petmanagement-network:
     driver: bridge
