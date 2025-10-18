@@ -18,7 +18,9 @@ services:
 
   # Backend API Service
   backend:
-    image: ghcr.io/egangithub1502/petapp/petmanagement-backend:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: petmanagement-backend
     restart: unless-stopped
     ports:
@@ -31,6 +33,9 @@ services:
       - mongodb
     networks:
       - backend-network
+    volumes:
+      - .:/app
+      - /app/node_modules
 
 volumes:
   mongodb_data:

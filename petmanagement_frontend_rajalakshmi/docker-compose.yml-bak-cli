@@ -3,7 +3,9 @@ version: '3.8'
 services:
   # Frontend Application
   frontend:
-    image: ghcr.io/egangithub1502/petapp/petmanagement-frontend:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: petmanagement-frontend
     restart: unless-stopped
     ports:
