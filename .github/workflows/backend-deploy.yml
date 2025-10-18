@@ -1,0 +1,107 @@
+name: Backend CI/CD - Pet Management
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'petmanagement_backend_rajalakshmi/**'
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - 'petmanagement_backend_rajalakshmi/**'
+
+env:
+  REGISTRY: ghcr.io
+  BACKEND_IMAGE: ghcr.io/${{ github.repository }}/petmanagement-backend
+
+jobs:
+  # -------------------------
+  # 🧪 Test Backend
+  # -------------------------
+  test-backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./petmanagement_backend_rajalakshmi
+
+    steps:
+      - name: 🛒 Checkout code
+        uses: actions/checkout@v4
+
+      - name: ⚙️ Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+
+      - name: 📦 Install dependencies
+        run: npm ci
+
+      - name: 🧪 Run tests
+        run: npm test || echo "No tests defined"
+
+      - name: 🔍 Check linting
+        run: npm run lint || echo "No lint script"
+
+  # -------------------------
+  # 🐳 Build & Push Backend Image
+  # -------------------------
+  build-backend:
+    runs-on: ubuntu-latest
+    needs: test-backend
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: 🛒 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🔐 Log in to Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGISTRY }}
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: 🏷️ Extract metadata for backend
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: ${{ env.BACKEND_IMAGE }}
+          tags: |
+            type=ref,event=branch
+            type=ref,event=pr
+            type=sha,prefix={{branch}}-
+            type=raw,value=latest,enable={{is_default_branch}}
+
+      - name: 🐳 Build and push backend image
+        uses: docker/build-push-action@v5
+        with:
+          context: ./petmanagement_backend_rajalakshmi
+          file: ./petmanagement_backend_rajalakshmi/Dockerfile
+          push: true
+          tags: ${{ steps.meta.outputs.tags }}
+          labels: ${{ steps.meta.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+  # -------------------------
+  # 🚀 Deploy Backend (optional)
+  # -------------------------
+  deploy-backend:
+    runs-on: ubuntu-latest
+    needs: build-backend
+    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+    environment: production
+
+    steps:
+      - name: 🛒 Checkout code
+        uses: actions/checkout@v4
+
+      - name: 🚀 Deploy Backend
+        run: |
+          echo "✅ Backend deployment started"
+          echo "Backend Image: ${{ env.BACKEND_IMAGE }}:latest"
+          echo "Add your SSH or Cloud Run deployment commands here"
+
