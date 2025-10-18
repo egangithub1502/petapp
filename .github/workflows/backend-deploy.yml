@@ -141,18 +141,13 @@ jobs:
 
     - name: Notify backend deployment success
       if: success()
-      uses: 8398a7/action-slack@v3
-      with:
-        status: success
-        text: "Pet Management Backend deployed successfully to production"
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      run: |
+        echo "✅ Backend deployment successful!"
+        echo "Deployment completed at $(date)"
 
     - name: Notify backend deployment failure
       if: failure()
-      uses: 8398a7/action-slack@v3
-      with:
-        status: failure
-        text: "Pet Management Backend deployment failed"
-      env:
-        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      run: |
+        echo "❌ Backend deployment failed!"
+        echo "Check the logs above for details"
+        echo "Deployment failed at $(date)"
