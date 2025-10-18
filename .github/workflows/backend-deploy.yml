@@ -92,6 +92,7 @@ jobs:
   deploy-backend:
     runs-on: ubuntu-latest
     needs: build-backend
+    if: false  # Disabled - SSH connection issues
     # if: github.ref == 'refs/heads/main' && github.event_name == 'push'
     # environment: production
 
@@ -110,20 +111,13 @@ jobs:
           # Navigate to backend deployment directory
           cd /opt/petmanagement/backend
 
-          # Backup current deployment
-          echo "Creating backend backup..."
-          mkdir -p backups
-          tar -czf backups/backend-backup-$(date +%Y%m%d_%H%M%S).tar.gz docker-compose.yml .env
-
-          # Update docker-compose.yml with latest backend image
-          sed -i "s|image:.*petmanagement-backend.*|image: ${{ env.BACKEND_IMAGE }}:latest|g" docker-compose.yml
-
           # Pull latest backend image
           echo "Pulling latest backend image..."
-          docker-compose pull backend
+          docker pull ${{ env.BACKEND_IMAGE }}:latest
 
-          # Restart backend service
+          # Restart backend service using existing docker-compose.yml
           echo "Restarting backend service..."
+          docker-compose down backend || true
           docker-compose up -d backend
 
           # Wait for backend to start
